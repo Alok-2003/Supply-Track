@@ -12,7 +12,7 @@ const mockVehicles = [
     id: '1',
     registration: 'MH-12-AB-1234',
     position: [1, 5, 0] as [number, number, number], 
-    material: 'Electronics',
+    material: 'Perishables',
     destination: 'Mumbai',
     eta: '2h 30m',
     health: 45,
@@ -27,44 +27,7 @@ const mockVehicles = [
       condition: 'Sunny',
     },
   },
-  {
-    id: '2',
-    registration: 'DL-05-CD-5678',
-    position: [2, 8, 0] as [number, number, number],
-    material: 'Perishables',
-    destination: 'Delhi',
-    eta: '3h 15m',
-    health: 80,
-    emissions: 18.2,
-    fuelEfficiency: 7.5,
-    driver: {
-      name: 'Priya Singh',
-      contact: '+91 9876543211',
-    },
-    weather: {
-      temperature: 28,
-      condition: 'Partly Cloudy',
-    },
-  },
-  {
-    id: '3',
-    registration: 'WB-02-EF-9012',
-    position: [1, 2, 0] as [number, number, number],
-    material: 'Medicine',
-    destination: 'Kolkata',
-    eta: '1h 30m',
-    health: 85,
-    emissions: 12.5,
-    fuelEfficiency: 8.2,
-    driver: {
-      name: 'Amit Roy',
-      contact: '+91 9876543212',
-    },
-    weather: {
-      temperature: 22,
-      condition: 'Cloudy',
-    },
-  },
+
 ];
 
 export function MapView() {

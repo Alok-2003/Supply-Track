@@ -19,6 +19,7 @@ export function Navbar() {
                         <NavItem to="/map" icon={<Map className="w-4 h-4" />} label="Interactive Map" isActive={isActive('/map')} />
                         <NavItem to="/dashboard" icon={<BarChart3 className="w-4 h-4" />} label="Dashboard" isActive={isActive('/dashboard')} />
                         <NavItem to="/management" icon={<Settings className="w-4 h-4" />} label="Management" isActive={isActive('/management')} />
+                        <NavItem to="/carbon" icon={<Settings className="w-4 h-4" />} label="Carbon Foot Print" isActive={isActive('/carbon')} />
                     </div>
                 </div>
             </div>
