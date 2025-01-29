@@ -37,7 +37,7 @@ const CarbonPrint: React.FC = () => {
     return (
         <div className="bg-gray-900 text-white min-h-screen py-10 px-5">
             <h1 className="text-center text-4xl font-bold mb-8 text-teal-400">
-                Truck Carbon Footprint Dashboard
+                 Carbon Footprint Dashboard
             </h1>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {/* Dynamically generate truck blocks */}

@@ -3,11 +3,11 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } fro
 import { ArrowRight, Box, Car, RefreshCw, Search, CloudSun, MapPin } from "lucide-react";
 
 const inventoryData = [
-  { name: "Item A", stock: 100, state: "Shipped", location: "Delhi" },
-  { name: "Item B", stock: 150, state: "Received", location: "Mumbai" },
-  { name: "Item C", stock: 75, state: "Manufactured", location: "Bengaluru" },
-  { name: "Item D", stock: 120, state: "Delivered", location: "Kolkata" },
-  { name: "Item E", stock: 60, state: "Created", location: "Chennai" }
+  { name: "Cotton", stock: 100, state: "Shipped", location: "Delhi" },
+  { name: "Steel", stock: 150, state: "Received", location: "Mumbai" },
+  { name: "Coal", stock: 75, state: "Manufactured", location: "Bengaluru" },
+  { name: "Steel", stock: 120, state: "Delivered", location: "Kolkata" },
+  { name: "Paper", stock: 60, state: "Created", location: "Chennai" }
 ];
 
 const staticWeatherData = {

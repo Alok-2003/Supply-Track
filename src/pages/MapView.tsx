@@ -23,11 +23,10 @@ const mockVehicles = [
       contact: '+91 9876543210',
     },
     weather: {
-      temperature: 32,
-      condition: 'Sunny',
+      temperature: 19,
+      condition: 'Foggy',
     },
   },
-
 ];
 
 export function MapView() {

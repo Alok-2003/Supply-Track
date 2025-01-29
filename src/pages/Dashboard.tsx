@@ -91,9 +91,9 @@ const Dashboard: React.FC = () => {
           <Card title="Weather">
             <div>
               <div className="text-lg">Location: Delhi</div>
-              <div className="text-lg">Temperature: 25°C</div>
+              <div className="text-lg">Temperature: 16°C</div>
               <div className="text-lg">Humidity: 60%</div>
-              <div className="text-lg">Conditions: Sunny</div>
+              <div className="text-lg">Conditions: Foggy</div>
             </div>
           </Card>
         </div>
