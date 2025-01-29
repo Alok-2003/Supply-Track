@@ -5,7 +5,6 @@ import { IndiaMap } from '../components/Map/IndiaMap';
 import { Vehicle } from '../components/Map/Vehicle';
 import { VehicleInfo } from '../components/UI/VehicleInfo';
 import { useMapStore } from '../store/useMapStore';
-import { Truck } from '../components/Map/Truck';
 
 // Mock data - in a real app, this would come from an API
 const mockVehicles = [
@@ -91,7 +90,6 @@ export function MapView() {
             castShadow
           />
           <IndiaMap />
-          <Truck />
           {mockVehicles.map((vehicle) => (
             <Vehicle key={vehicle.id} data={vehicle} />
           ))}
