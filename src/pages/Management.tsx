@@ -1,117 +1,152 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { ArrowRight, Box, Car, RefreshCw, Search, CloudSun, MapPin } from "lucide-react";
 
-const ManagementDashboard: React.FC = () => {
-  const [formData, setFormData] = useState({
-    itemName: "",
-    itemDetails: "",
-    itemId: "",
-    newOwner: "",
-    stateItemId: "",
-    itemState: "Created",
-    itemLocation: "",
-    viewItemId: "",
-  });
+const inventoryData = [
+  { name: "Item A", stock: 100, state: "Shipped", location: "Delhi" },
+  { name: "Item B", stock: 150, state: "Received", location: "Mumbai" },
+  { name: "Item C", stock: 75, state: "Manufactured", location: "Bengaluru" },
+  { name: "Item D", stock: 120, state: "Delivered", location: "Kolkata" },
+  { name: "Item E", stock: 60, state: "Created", location: "Chennai" }
+];
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
+const staticWeatherData = {
+  Delhi: { temperature: 18, description: "Clear sky", humidity: 60 },
+  Mumbai: { temperature: 22, description: "Few clouds", humidity: 80 },
+  Bengaluru: { temperature: 23, description: "Light rain", humidity: 85 },
+  Kolkata: { temperature: 21, description: "Scattered clouds", humidity: 70 },
+  Chennai: { temperature: 27, description: "Sunny", humidity: 65 }
+};
 
-  const handleSubmit = (e: React.FormEvent, type: string) => {
-    e.preventDefault();
-    if (type === "create") {
-      alert(`Item Created: ${formData.itemName}, Details: ${formData.itemDetails}`);
-    } else if (type === "transfer") {
-      alert(`Ownership Transferred: Item ID ${formData.itemId}, New Owner ${formData.newOwner}`);
-    } else if (type === "update") {
-      alert(
-        `State Updated: Item ID ${formData.stateItemId}, State ${formData.itemState}, Location ${formData.itemLocation}`
-      );
-    } else if (type === "view") {
-      // Mock data for demonstration purposes
-      const mockData = {
-        id: formData.viewItemId,
-        name: "Sample Item",
-        state: "Shipped",
-        location: "Distribution Center",
-        owner: "0x123456789abcdef",
-      };
-      alert(
-        `ID: ${mockData.id}, Name: ${mockData.name}, State: ${mockData.state}, Location: ${mockData.location}, Owner: ${mockData.owner}`
-      );
-    }
-  };
+const navItems = [
+  { name: "Inventory Overview", icon: Box },
+  { name: "Create Item", icon: ArrowRight },
+  { name: "Transfer Ownership", icon: Car },
+  { name: "Update Item State", icon: RefreshCw },
+  { name: "View Item Details", icon: Search }
+];
+
+function ManagementDashboard() {
+  const [section, setSection] = useState("Inventory Overview");
+  const [selectedCity, setSelectedCity] = useState("Delhi");
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen p-6">
-      <nav className="bg-gray-800 text-white p-4 rounded mb-4">
-        <h1 className="text-center text-lg font-bold">Supply Chain Management Dashboard</h1>
-      </nav>
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      <div className="container mx-auto p-6">
+        <div className="flex gap-6">
+          {/* Sidebar */}
+          <div className="w-1/4 bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+            <div className="p-6 bg-gray-700">
+              <h2 className="text-xl font-bold text-white">Dashboard</h2>
+            </div>
+            <div className="p-4">
+              {navItems.map(({ name, icon: Icon }) => (
+                <button
+                  key={name}
+                  onClick={() => setSection(name)}
+                  className={`w-full mb-2 p-3 rounded-lg text-left flex items-center gap-3 transition-all
+                    ${section === name
+                      ? "bg-gray-600 text-white font-semibold"
+                      : "hover:bg-gray-700 text-gray-300"}`}
+                >
+                  <Icon size={18} />
+                  {name}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Create Item Section */}
-        <div className="bg-gray-800 shadow-md rounded p-4">
-          <h4 className="mb-4 text-lg font-semibold">Create Item</h4>
-          <form onSubmit={(e) => handleSubmit(e, "create")}> 
-            <div className="mb-3">
-              <label htmlFor="itemName" className="block text-sm font-medium">Item Name</label>
-              <input
-                type="text"
-                id="itemName"
-                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600"
-                placeholder="Enter item name"
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="itemDetails" className="block text-sm font-medium">Details</label>
-              <textarea
-                id="itemDetails"
-                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600"
-                rows={3}
-                placeholder="Enter item details"
-                onChange={handleChange}
-                required
-              ></textarea>
-            </div>
-            <button type="submit" className="w-full p-2 bg-blue-500 rounded hover:bg-blue-600">Create Item</button>
-          </form>
-        </div>
+          {/* Main Content */}
+          <div className="flex-1">
+            {section === "Inventory Overview" && (
+              <div className="space-y-6">
+                <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+                  <h2 className="text-2xl font-bold mb-6 text-gray-100">Inventory Stock Overview</h2>
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={inventoryData}>
+                      <XAxis dataKey="name" stroke="#ddd" />
+                      <YAxis stroke="#ddd" />
+                      <Tooltip contentStyle={{ backgroundColor: "#333", color: "#fff" }} />
+                      <Legend wrapperStyle={{ color: "#ddd" }} />
+                      <Bar dataKey="stock" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
 
-        {/* Transfer Ownership Section */}
-        <div className="bg-gray-800 shadow-md rounded p-4">
-          <h4 className="mb-4 text-lg font-semibold">Transfer Ownership</h4>
-          <form onSubmit={(e) => handleSubmit(e, "transfer")}> 
-            <div className="mb-3">
-              <label htmlFor="itemId" className="block text-sm font-medium">Item ID</label>
-              <input
-                type="number"
-                id="itemId"
-                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600"
-                placeholder="Enter item ID"
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="newOwner" className="block text-sm font-medium">New Owner Address</label>
-              <input
-                type="text"
-                id="newOwner"
-                className="w-full p-2 rounded bg-gray-700 text-white border border-gray-600"
-                placeholder="Enter new owner address"
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <button type="submit" className="w-full p-2 bg-yellow-500 rounded hover:bg-yellow-600">Transfer Ownership</button>
-          </form>
+                <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+                  <div className="flex items-center gap-3 mb-4">
+                    <CloudSun className="text-yellow-400" />
+                    <h2 className="text-xl font-bold text-gray-100">Weather Information</h2>
+                  </div>
+                  <select
+                    onChange={(e) => setSelectedCity(e.target.value)}
+                    className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  >
+                    {Object.keys(staticWeatherData).map((city) => (
+                      <option key={city}>{city}</option>
+                    ))}
+                  </select>
+                  <div className="bg-gray-700 p-4 rounded-lg mt-4">
+                    <p className="text-lg">{`${selectedCity}: ${staticWeatherData[selectedCity].temperature}°C`}</p>
+                    <p>{`${staticWeatherData[selectedCity].description}`}</p>
+                    <p>{`Humidity: ${staticWeatherData[selectedCity].humidity}%`}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+{section === "Create Item" && (
+              <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <h2 className="text-2xl font-bold mb-6 text-gray-100">Create New Item</h2>
+                <div className="space-y-4">
+                  <input className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg" placeholder="Item Name" />
+                  <textarea className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg h-32" placeholder="Item Details" />
+                  <button className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">Create Item</button>
+                </div>
+              </div>
+            )}
+
+            {section === "Transfer Ownership" && (
+              <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <h2 className="text-2xl font-bold mb-6 text-gray-100">Transfer Ownership</h2>
+                <div className="space-y-4">
+                  <input className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg" placeholder="Item ID" type="number" />
+                  <input className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg" placeholder="New Owner Address" />
+                  <button className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">Transfer Ownership</button>
+                </div>
+              </div>
+            )}
+
+            {section === "Update Item State" && (
+              <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <h2 className="text-2xl font-bold mb-6 text-gray-100">Update Item State</h2>
+                <div className="space-y-4">
+                  <input className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg" placeholder="Item ID" type="number" />
+                  <select className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg">
+                    {["Created", "Manufactured", "Shipped", "Received", "Delivered"].map((state) => (
+                      <option key={state}>{state}</option>
+                    ))}
+                  </select>
+                  <input className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg" placeholder="Location" />
+                  <button className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">Update State</button>
+                </div>
+              </div>
+            )}
+
+{section === "View Item Details" && (
+              <div className="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <h2 className="text-2xl font-bold mb-6 text-gray-100">View Item Details</h2>
+                <div className="space-y-4">
+                  <input className="w-full p-3 bg-gray-700 text-gray-100 border border-gray-600 rounded-lg" placeholder="Item ID" type="number" />
+                  <button className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700">View Details</button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default ManagementDashboard;
